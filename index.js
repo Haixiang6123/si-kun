@@ -70,8 +70,29 @@ function computeMean(samples) {
     })
 }
 
+// Compute caratC
+function computeCaratCt(samples) {
+    Object.values(samples).forEach(sample => {
+        sample['^Ct'] = sample['tRNA'].map(value => value - sample.U6Mean)
+    })
+}
+
+// Compute doubleCaratC
+function computeDoubleCaraCt(samples, controlSample) {
+    Object.values(samples).forEach(sample => {
+        sample['^^Ct'] = sample['^Ct'].map((value, index) => value - controlSample['^Ct'][index])
+    })
+}
+
+// Compute log2
+function computeLog2(samples) {
+    Object.values(samples).forEach(sample => {
+        sample.log2 = sample['^^Ct'].map(value => Math.pow(2, -value))
+    })
+}
+
 // Entry
-function main(pathToFile) {
+function main(pathToFile, controlSampleName) {
     // Read raw data
     const rawData = readFile(pathToFile)
     // Structure data
@@ -80,7 +101,14 @@ function main(pathToFile) {
     const samples = makeSamples(dataArray)
     // Compute mean
     computeMean(samples)
+    // Compute ^Ct
+    computeCaratCt(samples)
+    // Find control sample and compute ^^Ct
+    const controlSample = samples[controlSampleName]
+    computeDoubleCaraCt(samples, controlSample)
+    // Compute log2
+    computeLog2(samples)
     console.log(samples)
 }
 
-main('./test/data1.csv')
+main('./test/data1.csv', process.argv[2])
