@@ -1,6 +1,8 @@
 const chalk = require('chalk')
 const fs = require('fs')
 
+const maths = require('./maths')
+
 const UTF8 = 'utf8'
 
 // Read csv file
@@ -47,7 +49,7 @@ function makeSamples(dataArray) {
             currentSample = {
                 name: data['Sample Name'],
             }
-            currentSample[data['Target Name']] = [data['Ct']]
+            currentSample[data['Target Name']] = [Number(data['Ct'])]
 
             samples[data['Sample Name']] = currentSample
         }
@@ -55,10 +57,17 @@ function makeSamples(dataArray) {
             if (!currentSample[data['Target Name']]) {
                 currentSample[data['Target Name']] = []
             }
-            currentSample[data['Target Name']].push(data['Ct'])
+            currentSample[data['Target Name']].push(Number(data['Ct']))
         }
     })
     return samples
+}
+
+// Compute mean
+function computeMean(samples) {
+    Object.values(samples).forEach(sample => {
+        sample.U6Mean = maths.average(sample['U6'])
+    })
 }
 
 // Entry
@@ -69,6 +78,9 @@ function main(pathToFile) {
     const dataArray = structureData(rawData)
     // Make them as samples
     const samples = makeSamples(dataArray)
+    // Compute mean
+    computeMean(samples)
+    console.log(samples)
 }
 
 main('./test/data1.csv')
