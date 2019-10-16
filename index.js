@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+#!/usr/bin/env node
 const fs = require('fs')
 
 const maths = require('./maths')
