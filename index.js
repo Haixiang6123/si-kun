@@ -111,4 +111,4 @@ function main(pathToFile, controlSampleName) {
     console.log(samples)
 }
 
-main('./test/data1.csv', process.argv[2])
+main(process.argv[2], process.argv[3])
