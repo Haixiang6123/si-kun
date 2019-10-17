@@ -77,7 +77,7 @@ function computeMean(samples, internalReference) {
 function computeCaratCt(samples, internalReference) {
     Object.values(samples).forEach(sample => {
         sample['^Ct'] = []
-        const targets = Array.from(sample.targets)
+        const targets = Array.from(sample.targets).sort()
         for (let i = 0; i < targets.length; i++) {
             if (targets[i] === internalReference) {
                 continue
