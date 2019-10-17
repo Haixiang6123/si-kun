@@ -50,7 +50,8 @@ function makeSamples(dataArray) {
                 name: data['Sample Name'],
             }
             currentSample[data['Target Name']] = [Number(data['Ct'])]
-            currentSample.targets = new Set(data['Target Name'])
+            currentSample.targets = new Set()
+            currentSample.targets.add(data['Target Name'])
 
             samples[data['Sample Name']] = currentSample
         }
@@ -73,16 +74,31 @@ function computeMean(samples, internalReference) {
 }
 
 // Compute caratC
-function computeCaratCt(samples) {
+function computeCaratCt(samples, internalReference) {
     Object.values(samples).forEach(sample => {
-        sample['^Ct'] = sample['tRNA'].map(value => value - sample.internalReferenceMean)
+        sample['^Ct'] = []
+        const targets = Array.from(sample.targets)
+        for (let i = 0; i < targets.length; i++) {
+            if (targets[i] === internalReference) {
+                continue
+            }
+            sample['^Ct'] = [
+                ...sample['^Ct'],
+                ...sample[targets[i]].map(value => value - sample.internalReferenceMean)
+            ]
+        }
     })
 }
 
 // Compute doubleCaratC
 function computeDoubleCaraCt(samples, controlSample) {
     Object.values(samples).forEach(sample => {
-        sample['^^Ct'] = sample['^Ct'].map((value, index) => value - controlSample['^Ct'][index])
+        // Avoid different length problem
+        const size = Math.min(sample['^Ct'].length, controlSample['^Ct'].length)
+        sample['^^Ct'] = []
+        for (let i = 0; i < size; i++) {
+            sample['^^Ct'].push(sample['^Ct'][i] - controlSample['^Ct'][i])
+        }
     })
 }
 
@@ -104,7 +120,7 @@ function main(pathToFile, internalReference, controlSampleName) {
     // Compute mean
     computeMean(samples, internalReference)
     // Compute ^Ct
-    computeCaratCt(samples)
+    computeCaratCt(samples, internalReference)
     // Find control sample and compute ^^Ct
     const controlSample = samples[controlSampleName]
     computeDoubleCaraCt(samples, controlSample)
