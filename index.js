@@ -50,6 +50,7 @@ function makeSamples(dataArray) {
                 name: data['Sample Name'],
             }
             currentSample[data['Target Name']] = [Number(data['Ct'])]
+            currentSample.targets = new Set(data['Target Name'])
 
             samples[data['Sample Name']] = currentSample
         }
@@ -58,22 +59,23 @@ function makeSamples(dataArray) {
                 currentSample[data['Target Name']] = []
             }
             currentSample[data['Target Name']].push(Number(data['Ct']))
+            currentSample.targets.add(data['Target Name'])
         }
     })
     return samples
 }
 
 // Compute mean
-function computeMean(samples) {
+function computeMean(samples, internalReference) {
     Object.values(samples).forEach(sample => {
-        sample.U6Mean = maths.average(sample['U6'])
+        sample.internalReferenceMean = maths.average(sample[internalReference])
     })
 }
 
 // Compute caratC
 function computeCaratCt(samples) {
     Object.values(samples).forEach(sample => {
-        sample['^Ct'] = sample['tRNA'].map(value => value - sample.U6Mean)
+        sample['^Ct'] = sample['tRNA'].map(value => value - sample.internalReferenceMean)
     })
 }
 
@@ -92,7 +94,7 @@ function computeLog2(samples) {
 }
 
 // Entry
-function main(pathToFile, controlSampleName) {
+function main(pathToFile, internalReference, controlSampleName) {
     // Read raw data
     const rawData = readFile(pathToFile)
     // Structure data
@@ -100,7 +102,7 @@ function main(pathToFile, controlSampleName) {
     // Make them as samples
     const samples = makeSamples(dataArray)
     // Compute mean
-    computeMean(samples)
+    computeMean(samples, internalReference)
     // Compute ^Ct
     computeCaratCt(samples)
     // Find control sample and compute ^^Ct
@@ -111,4 +113,8 @@ function main(pathToFile, controlSampleName) {
     console.log(samples)
 }
 
-main(process.argv[2], process.argv[3])
+const pathToFile = process.argv[2]
+const internalReference = process.argv[3]
+const controlSampleName = process.argv[4]
+
+main(pathToFile, internalReference, controlSampleName)
