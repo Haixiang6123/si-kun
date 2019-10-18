@@ -1,8 +1,3 @@
-#!/usr/bin/env node
-const fs = require('fs')
-
-const maths = require('./maths')
-
 const UTF8 = 'utf8'
 
 // Read csv file
@@ -69,7 +64,7 @@ function makeSamples(dataArray) {
 // Compute mean
 function computeMean(samples, internalReference) {
     Object.values(samples).forEach(sample => {
-        sample.internalReferenceMean = maths.average(sample[internalReference])
+        sample.internalReferenceMean = average(sample[internalReference])
     })
 }
 
@@ -110,9 +105,7 @@ function computeLog2(samples) {
 }
 
 // Entry
-function main(pathToFile, internalReference, controlSampleName) {
-    // Read raw data
-    const rawData = readFile(pathToFile)
+function logic(rawData, internalReference, controlSampleName) {
     // Structure data
     const dataArray = structureData(rawData)
     // Make them as samples
@@ -126,11 +119,6 @@ function main(pathToFile, internalReference, controlSampleName) {
     computeDoubleCaraCt(samples, controlSample)
     // Compute log2
     computeLog2(samples)
-    console.log(samples)
+    // Return result
+    return samples
 }
-
-const pathToFile = process.argv[2]
-const internalReference = process.argv[3]
-const controlSampleName = process.argv[4]
-
-main(pathToFile, internalReference, controlSampleName)

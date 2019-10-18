@@ -1,6 +1,6 @@
 {
   "name": "bio-guo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "使用 Node.js 对基因数据进行计算",
   "main": "index.js",
   "bin": {
