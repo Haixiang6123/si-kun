@@ -15,5 +15,5 @@ document.getElementById('file').onchange = function () {
 
 // Update results
 function output(result) {
-    document.querySelector('#output').innerText = JSON.stringify(result)
+    document.querySelector('#output').innerHTML = JSON.stringify(result)
 }

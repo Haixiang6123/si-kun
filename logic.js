@@ -104,6 +104,15 @@ function computeLog2(samples) {
     })
 }
 
+// Format result
+function formatResult(samples) {
+    let result = ''
+    Object.values(samples).forEach(sample => {
+        result += `${sample['name']}: ${sample['log2']}<br/>`
+    })
+    return result
+}
+
 // Entry
 function logic(rawData, internalReference, controlSampleName) {
     // Structure data
@@ -120,5 +129,5 @@ function logic(rawData, internalReference, controlSampleName) {
     // Compute log2
     computeLog2(samples)
     // Return result
-    return samples
+    return formatResult(samples)
 }
