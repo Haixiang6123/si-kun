@@ -1,16 +1,22 @@
-const internalReference = 'U6'
-const controlSampleName = 'EAA_1'
+let fileContent = ''
 // Register onchange
-document.getElementById('file').onchange = function () {
+document.querySelector('#file').onchange = function () {
     const file = this.files[0]
     const reader = new FileReader()
     reader.onload = function () {
-        // Entire file
-        const result = logic(this.result, internalReference, controlSampleName)
-        // Output result
-        output(result)
+        fileContent = this.result
     }
     reader.readAsText(file)
+}
+
+function start() {
+    const internalReference = document.querySelector('#internalReference').value
+    const controlSampleName = document.querySelector('#controlSampleName').value
+
+    // Entire file
+    const result = logic(fileContent, internalReference, controlSampleName)
+    // Output result
+    output(result)
 }
 
 // Update results

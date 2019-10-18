@@ -8,13 +8,20 @@
     <title>Bio</title>
 </head>
 <body>
-<form name="uploadForm">
-    <h2>Selected File</h2>
-    <input id="file" type="file" name="myFiles">
+<h2>选择文件</h2>
+<input id="file" type="file" name="myFiles">
 
-    <h2>Log2 Result</h2>
-    <div id="output"></div>
-</form>
+<h2>参数</h2>
+<label for="internalReference">Internal Reference</label>
+<input id="internalReference" type="text">
+
+<label for="controlSampleName">Control Sample Name</label>
+<input id="controlSampleName" type="text">
+
+<button id="start" onclick="start()">开始</button>
+
+<h2>Log2 结果</h2>
+<div id="output"></div>
 <script src="maths.js"></script>
 <script src="logic.js"></script>
 <script src="main.js"></script>
