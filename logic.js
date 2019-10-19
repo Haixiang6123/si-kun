@@ -1,10 +1,5 @@
 const UTF8 = 'utf8'
 
-// Read csv file
-function readFile(pathToFile) {
-    return fs.readFileSync(pathToFile, UTF8)
-}
-
 // Make structural data
 function structureData(rawData) {
     const lines = rawData.split('\r\n')
