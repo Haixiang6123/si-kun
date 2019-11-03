@@ -1,18 +1,21 @@
-const UTF8 = 'utf8'
-
+let header = []
 // Make structural data
 function structureData(rawData) {
     const lines = rawData.split('\r\n')
     let dataArray = []
 
     // Read table header
-    const header = lines[0].split(',').map(h => h.trim())
+    header = lines[0].split(',').map(h => h.trim())
 
     // Read the rest of data
     lines.forEach((line, index) => {
         if (index === 0) {
             return
         }
+        if (line.indexOf('Undetermined') > 0) {
+            return
+        }
+        console.log(line)
 
         let dataObject = {}
         const values = line.split(',')
@@ -30,27 +33,30 @@ function structureData(rawData) {
 function makeSamples(dataArray) {
     let samples = {}
     let currentSample = null
+
+    const [SAMPLE_NAME, TARGET_NAME, CT] = header
+
     dataArray.forEach(data => {
-        if (!data['Sample Name']) {
+        if (!data[SAMPLE_NAME]) {
             return
         }
         // First time visit
-        if (!currentSample || currentSample['name'] !== data['Sample Name']) {
+        if (!currentSample || currentSample['name'] !== data[SAMPLE_NAME]) {
             currentSample = {
-                name: data['Sample Name'],
+                name: data[SAMPLE_NAME],
             }
-            currentSample[data['Target Name']] = [Number(data['Ct'])]
+            currentSample[data[TARGET_NAME]] = [Number(data[CT])]
             currentSample.targets = new Set()
-            currentSample.targets.add(data['Target Name'])
+            currentSample.targets.add(data[TARGET_NAME])
 
-            samples[data['Sample Name']] = currentSample
+            samples[data[SAMPLE_NAME]] = currentSample
         }
         else {
-            if (!currentSample[data['Target Name']]) {
-                currentSample[data['Target Name']] = []
+            if (!currentSample[data[TARGET_NAME]]) {
+                currentSample[data[TARGET_NAME]] = []
             }
-            currentSample[data['Target Name']].push(Number(data['Ct']))
-            currentSample.targets.add(data['Target Name'])
+            currentSample[data[TARGET_NAME]].push(Number(data[CT]))
+            currentSample.targets.add(data[TARGET_NAME])
         }
     })
     return samples
@@ -67,7 +73,7 @@ function computeMean(samples, internalReference) {
 function computeCaratCt(samples, internalReference) {
     Object.values(samples).forEach(sample => {
         sample['^Ct'] = []
-        const targets = Array.from(sample.targets).sort()
+        const targets = Array.from(sample.targets)
         for (let i = 0; i < targets.length; i++) {
             if (targets[i] === internalReference) {
                 continue
