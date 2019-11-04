@@ -1,4 +1,5 @@
 let header = []
+let content = []
 // Make structural data
 function structureData(rawData) {
     const lines = rawData.split('\r\n')
@@ -6,6 +7,7 @@ function structureData(rawData) {
 
     // Read table header
     header = lines[0].split(',').map(h => h.trim())
+    content.push(header)
 
     // Read the rest of data
     lines.forEach((line, index) => {
@@ -15,10 +17,10 @@ function structureData(rawData) {
         if (line.indexOf('Undetermined') > 0) {
             return
         }
-        console.log(line)
 
         let dataObject = {}
         const values = line.split(',')
+        content.push(values)
         header.forEach((h, i) => {
             dataObject[h] = values[i]
         })
@@ -114,6 +116,43 @@ function formatResult(samples) {
     return result
 }
 
+function getOutput(samples, internalReference, controlSampleName) {
+    // Content
+    content.forEach((values, index)=> {
+        if (values.length === 0 || values[0] === '') {
+            return
+        }
+        if (index === 0) {
+            values.push(`mean(${internalReference})`, '^Ct', '^^Ct', 'log2')
+            return
+        }
+        const [sampleName, targetName, _] = values
+        // Skip internal reference
+        if (targetName === internalReference) {
+            values.push(samples[sampleName]['internalReferenceMean'], '', '', '')
+            return
+        }
+        // Mean
+        values.push('')
+        // ^Ct
+        values.push(samples[sampleName]['^Ct'].shift())
+        // ^^Ct
+        values.push(samples[sampleName]['^^Ct'].shift())
+        // log
+        values.push(samples[sampleName]['log2'].shift())
+    })
+    return content
+}
+
+function getCSV(content) {
+    let text = ''
+    content.forEach(values => {
+        text += values.join(',') + '\n'
+    })
+
+    createFile(text)
+}
+
 // Entry
 function logic(rawData, internalReference, controlSampleName) {
     // Structure data
@@ -129,6 +168,11 @@ function logic(rawData, internalReference, controlSampleName) {
     computeDoubleCaraCt(samples, controlSample)
     // Compute log2
     computeLog2(samples)
+    console.log(samples)
+    // Output new csv
+    const newContent = getOutput(samples, internalReference, controlSampleName)
+    // Generate csv file
+    getCSV(newContent)
     // Return result
     return formatResult(samples)
 }
