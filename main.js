@@ -14,5 +14,10 @@ function start() {
     const controlSampleName = document.querySelector('#controlSampleName').value
 
     // Start analyze
-    logic(fileContent, internalReference, controlSampleName)
+    try {
+        logic(fileContent, internalReference, controlSampleName)
+    }
+    catch (e) {
+        alert('出错啦')
+    }
 }
