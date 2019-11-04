@@ -107,15 +107,6 @@ function computeLog2(samples) {
     })
 }
 
-// Format result
-function formatResult(samples) {
-    let result = ''
-    Object.values(samples).forEach(sample => {
-        result += `${sample['name']}: ${sample['log2']}<br/>`
-    })
-    return result
-}
-
 function getOutput(samples, internalReference, controlSampleName) {
     // Content
     content.forEach((values, index)=> {
@@ -144,15 +135,6 @@ function getOutput(samples, internalReference, controlSampleName) {
     return content
 }
 
-function getCSV(content) {
-    let text = ''
-    content.forEach(values => {
-        text += values.join(',') + '\n'
-    })
-
-    createFile(text)
-}
-
 // Entry
 function logic(rawData, internalReference, controlSampleName) {
     // Structure data
@@ -171,8 +153,5 @@ function logic(rawData, internalReference, controlSampleName) {
     console.log(samples)
     // Output new csv
     const newContent = getOutput(samples, internalReference, controlSampleName)
-    // Generate csv file
-    getCSV(newContent)
-    // Return result
-    return formatResult(samples)
+    createXLXS(newContent)
 }
