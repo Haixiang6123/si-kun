@@ -105,7 +105,6 @@
                 }
 
                 this.isLoading = false
-                this.hasFile = false
             }
         }
     }
