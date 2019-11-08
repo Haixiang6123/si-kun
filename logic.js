@@ -80,6 +80,8 @@ function computeCaratCt(samples, internalReference) {
             if (targets[i] === internalReference) {
                 continue
             }
+            // Get ^Ct value for each target in each sample
+            sample[`${targets[i]}-^Ct`] = sample[targets[i]].map(value => value - sample.internalReferenceMean)
             sample['^Ct'] = [
                 ...sample['^Ct'],
                 ...sample[targets[i]].map(value => value - sample.internalReferenceMean)
@@ -89,15 +91,25 @@ function computeCaratCt(samples, internalReference) {
 }
 
 // Compute doubleCaratC
-function computeDoubleCaraCt(samples, controlSample) {
+function computeDoubleCaraCt(samples, controlSample, internalReference) {
     Object.values(samples).forEach(sample => {
-        // Avoid different length problem
-        let controlSampleIndex = 0
         sample['^^Ct'] = []
-        for (let i = 0; i < sample['^Ct'].length; i++) {
-            sample['^^Ct'].push(sample['^Ct'][i] - controlSample['^Ct'][controlSampleIndex])
+        const targets = Array.from(sample.targets)
+        for (let i = 0; i < targets.length; i++) {
+            if (targets[i] === internalReference) {
+                continue
+            }
+            // Control sample target index
+            let index = 0
+            sample[`${targets[i]}-^^Ct`] = sample[`${targets[i]}-^Ct`].map(sampleCaraCt => {
+                const doubleCaraCt = sampleCaraCt - controlSample[`${targets[i]}-^Ct`][index]
 
-            controlSampleIndex = Math.min(controlSampleIndex + 1, controlSample['^Ct'].length - 1)
+                index = Math.min(index + 1, controlSample[`${targets[i]}-^Ct`].length - 1)
+
+                sample['^^Ct'].push(doubleCaraCt)
+
+                return doubleCaraCt
+            })
         }
     })
 }
@@ -149,7 +161,7 @@ function logic(rawData, internalReference, controlSampleName) {
     computeCaratCt(samples, internalReference)
     // Find control sample and compute ^^Ct
     const controlSample = samples[controlSampleName]
-    computeDoubleCaraCt(samples, controlSample)
+    computeDoubleCaraCt(samples, controlSample, internalReference)
     // Compute log2
     computeLog2(samples)
     console.log(samples)
