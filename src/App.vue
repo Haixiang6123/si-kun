@@ -123,6 +123,9 @@
                     left: 0;
                     top: 0;
                     opacity: 0;
+                    > input {
+                        height: 39px;
+                    }
                 }
             }
 
