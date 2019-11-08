@@ -1,5 +1,14 @@
+import {createXLXS} from "./file"
+
 let header = []
 let content = []
+
+function average(array) {
+    let sum = 0
+    array.forEach(num => sum += num)
+    return sum / array.length
+}
+
 // Make structural data
 function structureData(rawData) {
     const lines = rawData.split('\r\n')
@@ -150,7 +159,7 @@ function getOutput(samples, internalReference) {
 }
 
 // Entry
-function logic(rawData, internalReference, controlSampleName) {
+export default function logic(rawData, internalReference, controlSampleName) {
     // Structure data
     const dataArray = structureData(rawData)
     // Make them as samples

@@ -1,24 +1,23 @@
 {
   "name": "bio-guo",
-  "version": "1.0.1",
-  "description": "使用 Node.js 对基因数据进行计算",
-  "main": "index.js",
-  "bin": {
-    "bio": "index.js"
-  },
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Haixiang6123/bio-guo.git"
+  "dependencies": {
+    "core-js": "^3.3.2",
+    "file-saver": "^2.0.2",
+    "vue": "^2.6.10",
+    "wired-elements": "^2.0.0",
+    "xlsx": "^0.15.1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Haixiang6123/bio-guo/issues"
-  },
-  "homepage": "https://github.com/Haixiang6123/bio-guo#readme",
-  "dependencies": {}
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.0.0",
+    "@vue/cli-service": "^4.0.0",
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
 }

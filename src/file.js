@@ -1,3 +1,6 @@
+import {saveAs} from 'file-saver'
+import XLSX from 'xlsx'
+
 function s2ab(s) {
     const buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
     const view = new Uint8Array(buf);  //create uint8array as viewer
@@ -5,7 +8,7 @@ function s2ab(s) {
     return buf;
 }
 
-function createXLXS(content) {
+export function createXLXS(content) {
     const wb = XLSX.utils.book_new();
 
     wb.Props = {
