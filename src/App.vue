@@ -8,7 +8,7 @@
             <div class="form-wrapper center">
                 <wired-card elevation="2" class="form center">
                     <div class="file-wrapper form-item center">
-                        <wired-button>选一个CSV文件吧~</wired-button>
+                        <wired-button>{{fileName}}</wired-button>
                         <span class="hidden-file-wrapper">
                         <input ref="fileInput" name="csvFile" type="file" @change="chooseFile">
                     </span>
@@ -51,6 +51,7 @@
                 hasFile: false,
                 fileContent: '',
                 today: '',
+                fileName: '选一个CSV文件吧~',
             }
         },
         mounted() {
@@ -61,6 +62,8 @@
         methods: {
             chooseFile() {
                 const file = this.$refs.fileInput.files[0]
+                this.fileName = '已选：' + (file.name.length > 9 ? `${file.name.substring(0, 10)}...` : file.name)
+
                 const reader = new FileReader()
                 reader.onload = (e) => {
                     this.fileContent = e.target.result
