@@ -78,6 +78,14 @@
         },
         methods: {
             chooseFile() {
+                const fileInput = this.$refs.fileInput
+
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    this.hasError = true
+                    this.hasFile = false
+                    return
+                }
+
                 const file = this.$refs.fileInput.files[0]
                 this.fileName = '已选：' + (file.name.length > 9 ? `${file.name.substring(0, 10)}...` : file.name)
 
