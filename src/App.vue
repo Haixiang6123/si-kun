@@ -37,6 +37,13 @@
         <p class="saying">好好学习，天天向上</p>
         <p class="author">——习大大</p>
 
+        <wired-dialog :open="isLoading">
+            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
+                <p style="font-family: 'cn-handwrite',serif; font-size: 2em; font-weight: bold">加载中...</p>
+                <wired-spinner spinning duration="1000"></wired-spinner>
+            </div>
+        </wired-dialog>
+
         <wired-dialog :open="hasError">
             <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
                 <p style="font-family: 'cn-handwrite',serif; font-size: 2em; font-weight: bold">出错啦 :(</p>
@@ -60,6 +67,8 @@
                 today: '',
                 fileName: '选一个CSV文件吧~',
                 hasError: false,
+                isLoading: false,
+                loadingStatus: 0
             }
         },
         mounted() {
@@ -87,6 +96,7 @@
 
                 // Start to analyze
                 try {
+                    this.isLoading = true
                     logic(this.fileContent, this.$refs.internalReference.value, this.$refs.controlSampleName.value)
                 }
                 catch(e) {
@@ -94,6 +104,7 @@
                     console.error(e)
                 }
 
+                this.isLoading = false
                 this.hasFile = false
             }
         }
