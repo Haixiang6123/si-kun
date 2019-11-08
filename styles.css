@@ -1,16 +1,41 @@
-.form {
-    width: 60%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 2px 2px 0px 0px rgba(238,238,238,1);
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-button {
-    padding: 0.5em 1em;
-    background: #419EFF;
-    border-radius: 4px;
-    color: white;
-    border: none;
+.calendar-wrapper {
+    width: 45%;
+}
+
+.form {
+    width: 25%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-wrapper {
+    position: relative;
+}
+
+.hidden-file-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.form-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-divider {
+    margin: 8px;
+    width: 250px;
 }

@@ -5,28 +5,40 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <title>Bio</title>
+    <title>还没想好叫什么标题</title>
 </head>
 <body>
-<div class="form">
-    <h2>选择文件</h2>
-    <input id="file" type="file" name="myFiles">
 
-    <h2>参数</h2>
-    <div>
-        <label for="internalReference">Internal Reference</label>
-        <input id="internalReference" type="text">
-    </div>
-    <div>
-        <label for="controlSampleName">Control Sample Name</label>
-        <input id="controlSampleName" type="text">
-    </div>
-
-    <button id="start" onclick="start()">开始</button>
-
-    <a download="info.txt" id="downloadlink" style="display: none">Download</a>
+<div class="calendar-wrapper">
+    <wired-calendar id="calendar"></wired-calendar>
 </div>
+
+<wired-card elevation="2" class="form">
+    <div class="file-wrapper form-item">
+        <wired-button onclick="triggerChooseFile()">选一个CSV文件吧~</wired-button>
+        <span class="hidden-file-wrapper">
+            <wired-input id="hidden-file" name="csvFile" type="file" onchange="chooseFile()"></wired-input>
+        </span>
+    </div>
+
+    <div class="form-item">
+        <wired-input id="internalReference" placeholder="Internal Reference" type="text"></wired-input>
+    </div>
+    <div class="form-item">
+        <wired-input id="controlSampleName" placeholder="Control Sample" type="text"></wired-input>
+    </div>
+
+    <div class="form-item">
+        <wired-divider class="form-divider"></wired-divider>
+    </div>
+
+    <div class="form-item">
+        <wired-button id="start" onclick="start()" disabled>Let's Rock It !!!</wired-button>
+    </div>
+</wired-card>
+<script type="module" src="https://cdn.pika.dev/wired-elements/latest"></script>
 <script src="lib/xlsx.js"></script>
 <script src="lib/fileSaver.js"></script>
 <script src="maths.js"></script>

@@ -1,7 +1,7 @@
 let fileContent = ''
 let hasFile = false
-// Register onchange
-document.querySelector('#file').onchange = function () {
+
+function chooseFile() {
     const file = this.files[0]
     const reader = new FileReader()
     reader.onload = function () {
@@ -12,8 +12,6 @@ document.querySelector('#file').onchange = function () {
     hasFile = true
     document.querySelector('#start').disabled = false
 }
-
-document.querySelector('#start').disabled = true
 
 function start() {
     if (!hasFile) {
