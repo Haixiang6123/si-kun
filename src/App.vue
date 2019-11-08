@@ -35,7 +35,7 @@
 <script>
     import "wired-elements"
 
-    import logic from './logic'
+    import logic from './utils/logic'
 
     export default {
         name: 'app',
