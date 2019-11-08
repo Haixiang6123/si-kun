@@ -36,6 +36,13 @@
 
         <p class="saying">好好学习，天天向上</p>
         <p class="author">——习大大</p>
+
+        <wired-dialog :open="hasError">
+            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
+                <p style="font-family: 'cn-handwrite',serif; font-size: 2em; font-weight: bold">出错啦 :(</p>
+                <wired-button style="margin-top: 8px" @click="hasError = false">好</wired-button>
+            </div>
+        </wired-dialog>
     </div>
 </template>
 
@@ -52,6 +59,7 @@
                 fileContent: '',
                 today: '',
                 fileName: '选一个CSV文件吧~',
+                hasError: false,
             }
         },
         mounted() {
@@ -78,7 +86,13 @@
                 }
 
                 // Start to analyze
-                logic(this.fileContent, this.$refs.internalReference.value, this.$refs.controlSampleName.value)
+                try {
+                    logic(this.fileContent, this.$refs.internalReference.value, this.$refs.controlSampleName.value)
+                }
+                catch(e) {
+                    this.hasError = true
+                    console.error(e)
+                }
 
                 this.hasFile = false
             }
