@@ -15,10 +15,10 @@
                     </div>
 
                     <div class="form-item center">
-                        <wired-input ref="internalReference" placeholder="Internal Reference" type="text"></wired-input>
+                        <wired-input ref="internalReference" class="form-item-input" placeholder="Internal Reference" type="text"></wired-input>
                     </div>
                     <div class="form-item center">
-                        <wired-input ref="controlSampleName" placeholder="Control Sample" type="text"></wired-input>
+                        <wired-input ref="controlSampleName" class="form-item-input" placeholder="Control Sample" type="text"></wired-input>
                     </div>
 
                     <div class="form-item center">
@@ -140,6 +140,9 @@
 
             &-item {
                 margin-bottom: 8px;
+                &-input {
+                    padding: 6px;
+                }
             }
 
             &-divider {
