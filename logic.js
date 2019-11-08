@@ -92,10 +92,12 @@ function computeCaratCt(samples, internalReference) {
 function computeDoubleCaraCt(samples, controlSample) {
     Object.values(samples).forEach(sample => {
         // Avoid different length problem
-        const size = Math.min(sample['^Ct'].length, controlSample['^Ct'].length)
+        let controlSampleIndex = 0
         sample['^^Ct'] = []
-        for (let i = 0; i < size; i++) {
-            sample['^^Ct'].push(sample['^Ct'][i] - controlSample['^Ct'][i])
+        for (let i = 0; i < sample['^Ct'].length; i++) {
+            sample['^^Ct'].push(sample['^Ct'][i] - controlSample['^Ct'][controlSampleIndex])
+
+            controlSampleIndex = Math.min(controlSampleIndex + 1, controlSample['^Ct'].length - 1)
         }
     })
 }
@@ -107,7 +109,7 @@ function computeLog2(samples) {
     })
 }
 
-function getOutput(samples, internalReference, controlSampleName) {
+function getOutput(samples, internalReference) {
     // Content
     content.forEach((values, index)=> {
         if (values.length === 0 || values[0] === '') {
