@@ -2,7 +2,7 @@
     <div id="app">
         <main class="center">
             <div class="calendar-wrapper">
-                <wired-calendar></wired-calendar>
+                <wired-calendar :selected="today"></wired-calendar>
             </div>
 
             <div class="form-wrapper center">
@@ -50,7 +50,13 @@
             return {
                 hasFile: false,
                 fileContent: '',
+                today: '',
             }
+        },
+        mounted() {
+            const today = new Date()
+            const info = today.toString().split(' ')
+            this.today = `${info[1]} ${today.getDate()}, ${today.getFullYear()}`
         },
         methods: {
             chooseFile() {
