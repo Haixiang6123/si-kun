@@ -1,6 +1,6 @@
 <template>
-    <div id="app" class="center">
-        <main>
+    <div id="app">
+        <main class="center">
             <div class="calendar-wrapper">
                 <wired-calendar></wired-calendar>
             </div>
@@ -31,6 +31,11 @@
                 </wired-card>
             </div>
         </main>
+
+        <wired-divider class="global-divider"></wired-divider>
+
+        <p class="saying">好好学习，天天向上</p>
+        <p class="author">——习大大</p>
     </div>
 </template>
 
@@ -73,21 +78,23 @@
 </script>
 
 <style lang="scss">
-    @font-face {
-        font-family: 'handwrite';
-        src: url('./fonts/SCRIPTIN.ttf') format('ttf'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-    }
 
     * {
         margin: 0;
         padding: 0;
     }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
     main {
-        margin-top: 20vh;
         display: flex;
         align-items: start;
         justify-content: center;
-        height: 60vh;
     }
 
     .center {
@@ -128,5 +135,23 @@
                 width: 250px;
             }
         }
+    }
+
+    .global-divider {
+        margin: 16px 0;
+    }
+
+    .saying {
+        font-size: 2em;
+        font-family: 'en-handwrite', 'cn-handwrite', serif;
+        font-weight: bold;
+    }
+
+    .author {
+        text-align: right;
+        margin-top: 8px;
+        font-size: 2em;
+        font-family: 'en-handwrite', 'cn-handwrite', serif;
+        font-weight: bold;
     }
 </style>
