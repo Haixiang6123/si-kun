@@ -1,5 +1,9 @@
 <template>
     <div id="app">
+        <div class="star center">
+            <img v-if="!isNight" class="sun" src="./assets/sun.jpg" alt="sun-moon">
+            <img v-if="isNight" class="moon" src="./assets/moon.png" alt="sun-moon">
+        </div>
         <main class="center">
             <div class="form-wrapper center">
                 <wired-card elevation="2" class="form center">
@@ -72,12 +76,14 @@
                 loadingStatus: 0,
                 quote: '',
                 author: '',
+                isNight: false,
             }
         },
         mounted() {
             const today = new Date()
             const info = today.toString().split(' ')
             this.today = `${info[1]} ${today.getDate()}, ${today.getFullYear()}`
+            this.isNight = today.getHours() >= 18
 
             this.getQuote()
         },
@@ -130,7 +136,15 @@
 </script>
 
 <style lang="scss">
-
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes tinyRotate {
+        0% { transform: rotate(-10deg); }
+        50% { transform: rotate(30deg); }
+        100% { transform: rotate(-10deg); }
+    }
     * {
         margin: 0;
         padding: 0;
@@ -141,6 +155,19 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+    }
+
+    .star {
+        margin-bottom: 8px;
+        & > img {
+            width: 140px;
+            &.sun {
+                animation: spin 5s infinite linear;
+            }
+            &.moon {
+                animation: tinyRotate 3s infinite;
+            }
+        }
     }
 
     main {
