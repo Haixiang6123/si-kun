@@ -1,10 +1,6 @@
 <template>
     <div id="app">
         <main class="center">
-            <div class="calendar-wrapper">
-                <wired-calendar :selected="today"></wired-calendar>
-            </div>
-
             <div class="form-wrapper center">
                 <wired-card elevation="2" class="form center">
                     <div class="file-wrapper form-item center">
@@ -29,6 +25,10 @@
                         <wired-button @click="start" :disabled="!hasFile">Let's Rock It !!!</wired-button>
                     </div>
                 </wired-card>
+            </div>
+
+            <div class="calendar-wrapper">
+                <wired-calendar :selected="today"></wired-calendar>
             </div>
         </main>
 
@@ -156,7 +156,7 @@
     }
 
     .calendar-wrapper {
-        margin-right: 40px;
+        margin-left: 40px;
     }
 
     .form-wrapper {
