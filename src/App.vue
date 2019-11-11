@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="star center">
-            <img v-if="!isNight" class="sun" src="./assets/sun.jpg" alt="sun-moon">
+            <img v-if="!isNight" class="sun" src="./assets/sun.png" alt="sun-moon">
             <img v-if="isNight" class="moon" src="./assets/moon.png" alt="sun-moon">
         </div>
         <main class="center">
