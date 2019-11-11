@@ -34,8 +34,8 @@
 
         <wired-divider class="global-divider"></wired-divider>
 
-        <p class="saying">好好学习，天天向上</p>
-        <p class="author">——习大大</p>
+        <p class="saying">{{quote}}</p>
+        <p class="author">——{{author}}</p>
 
         <wired-dialog :open="isLoading">
             <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
@@ -55,6 +55,7 @@
 
 <script>
     import "wired-elements"
+    import axios from 'axios'
 
     import logic from './utils/logic'
 
@@ -68,15 +69,25 @@
                 fileName: '选一个CSV文件吧~',
                 hasError: false,
                 isLoading: false,
-                loadingStatus: 0
+                loadingStatus: 0,
+                quote: '',
+                author: '',
             }
         },
         mounted() {
             const today = new Date()
             const info = today.toString().split(' ')
             this.today = `${info[1]} ${today.getDate()}, ${today.getFullYear()}`
+
+            this.getQuote()
         },
         methods: {
+            async getQuote() {
+                const response = await axios.get('https://api.quotable.io/random')
+
+                this.quote = response.data.content
+                this.author = response.data.author
+            },
             chooseFile() {
                 const fileInput = this.$refs.fileInput
 
@@ -189,7 +200,7 @@
     }
 
     .saying {
-        font-size: 2em;
+        max-width: 660px;
         font-family: 'en-handwrite', 'cn-handwrite', serif;
         font-weight: bold;
     }
@@ -197,7 +208,6 @@
     .author {
         text-align: right;
         margin-top: 8px;
-        font-size: 2em;
         font-family: 'en-handwrite', 'cn-handwrite', serif;
         font-weight: bold;
     }
