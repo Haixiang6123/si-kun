@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <div class="star center">
-            <img v-if="!isNight" class="sun" src="./assets/sun.png" alt="sun-moon">
-            <img v-if="isNight" class="moon" src="./assets/moon.png" alt="sun-moon">
+            <img class="sun" src="./assets/sun.png" alt="sun-moon">
         </div>
         <main class="center">
             <div class="form-wrapper center">
@@ -76,14 +75,12 @@
                 loadingStatus: 0,
                 quote: '',
                 author: '',
-                isNight: false,
             }
         },
         mounted() {
             const today = new Date()
             const info = today.toString().split(' ')
             this.today = `${info[1]} ${today.getDate()}, ${today.getFullYear()}`
-            this.isNight = today.getHours() >= 18
 
             this.getQuote()
         },
@@ -140,11 +137,6 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
-    @keyframes tinyRotate {
-        0% { transform: rotate(-10deg); }
-        50% { transform: rotate(30deg); }
-        100% { transform: rotate(-10deg); }
-    }
     * {
         margin: 0;
         padding: 0;
@@ -155,6 +147,7 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+        background: #fbffe1;
     }
 
     .star {
@@ -163,9 +156,6 @@
             width: 140px;
             &.sun {
                 animation: spin 5s infinite linear;
-            }
-            &.moon {
-                animation: tinyRotate 3s infinite;
             }
         }
     }
@@ -189,6 +179,7 @@
     .form-wrapper {
         height: 320px;
         width: 300px;
+        background: #fff;
 
         .form {
             height: 100%;
@@ -227,12 +218,15 @@
     }
 
     .saying {
+        letter-spacing: .1em;
+        line-height: 1.3;
         max-width: 660px;
         font-family: 'en-handwrite', 'cn-handwrite', serif;
         font-weight: bold;
     }
 
     .author {
+        letter-spacing: .1em;
         text-align: right;
         margin-top: 8px;
         font-family: 'en-handwrite', 'cn-handwrite', serif;
