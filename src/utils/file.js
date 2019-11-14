@@ -8,7 +8,7 @@ function s2ab(s) {
     return buf;
 }
 
-export function createXLXS(content, internalReference, controlSample) {
+export function createXLSX(content, internalReference, controlSample) {
     const wb = XLSX.utils.book_new();
 
     wb.Props = {

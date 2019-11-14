@@ -1,4 +1,4 @@
-import {createXLXS} from "./file"
+import {createXLSX} from "./file"
 
 let header = []
 let content = []
@@ -179,6 +179,6 @@ export default function logic(rawData, internalReference, controlSampleName) {
     console.log(samples)
     // Output new csv
     const newContent = getOutput(samples, internalReference, controlSampleName)
-    // Create xlxs file
-    createXLXS(newContent, internalReference, controlSampleName)
+    // Create xlsx file
+    createXLSX(newContent, internalReference, controlSampleName)
 }

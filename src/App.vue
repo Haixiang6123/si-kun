@@ -40,16 +40,39 @@
         <p class="saying">{{quote}}</p>
         <p class="author">——{{author}}</p>
 
+        <wired-dialog :open="isSuccess">
+            <div style="padding: 16px;">
+                <p style="font-size: 1.4em; font-weight: bold; text-align: center;">
+                    文件已下载！
+                </p>
+                <p>
+                    <span style="font-weight: bold;">Internal Reference:</span>
+                    {{internalReference}}
+                </p>
+                <p>
+                    <span style="font-weight: bold">Control Sample Name:</span>
+                    {{controlSampleName}}
+                </p>
+                <p>
+                    <span style="font-weight: bold">文件:</span>
+                    [{{internalReference}}]-[{{controlSampleName}}]-Result.xlsx
+                </p>
+                <div class="center">
+                    <wired-button style="margin-top: 8px;" @click="isSuccess = false">好</wired-button>
+                </div>
+            </div>
+        </wired-dialog>
+
         <wired-dialog :open="isLoading">
             <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
-                <p style="font-family: 'cn-handwrite',serif; font-size: 2em; font-weight: bold">加载中...</p>
+                <p style="font-size: 2em; font-weight: bold">加载中...</p>
                 <wired-spinner spinning duration="1000"></wired-spinner>
             </div>
         </wired-dialog>
 
         <wired-dialog :open="hasError">
             <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 16px;">
-                <p style="font-family: 'cn-handwrite',serif; font-size: 2em; font-weight: bold">出错啦 :(</p>
+                <p style="font-size: 2em; font-weight: bold">出错啦 :(</p>
                 <wired-button style="margin-top: 8px" @click="hasError = false">好</wired-button>
             </div>
         </wired-dialog>
@@ -72,7 +95,10 @@
                 fileName: '选一个CSV文件吧~',
                 hasError: false,
                 isLoading: false,
+                isSuccess: false,
                 loadingStatus: 0,
+                internalReference: '',
+                controlSampleName: '',
                 quote: '',
                 author: '',
             }
@@ -120,9 +146,15 @@
                 try {
                     this.isLoading = true
                     logic(this.fileContent, this.$refs.internalReference.value, this.$refs.controlSampleName.value)
+
+                    this.internalReference = this.$refs.internalReference.value
+                    this.controlSampleName = this.$refs.controlSampleName.value
+
+                    this.isSuccess = true
                 }
                 catch(e) {
                     this.hasError = true
+                    this.isSuccess = false
                     console.error(e)
                 }
 
