@@ -126,7 +126,15 @@
                     console.error(e)
                 }
 
+                this.reset()
+
                 this.isLoading = false
+            },
+            reset() {
+                this.$refs.fileInput.value = ''
+                this.fileName = '选一个CSV文件吧~'
+                this.$refs.internalReference.value = null
+                this.$refs.controlSampleName.value = null
             }
         }
     }

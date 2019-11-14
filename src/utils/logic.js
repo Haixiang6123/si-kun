@@ -160,6 +160,9 @@ function getOutput(samples, internalReference) {
 
 // Entry
 export default function logic(rawData, internalReference, controlSampleName) {
+    // Clear data
+    header = []
+    content = []
     // Structure data
     const dataArray = structureData(rawData)
     // Make them as samples
