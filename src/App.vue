@@ -59,6 +59,7 @@
 <script>
     import "wired-elements"
     import axios from 'axios'
+    import bubble from 'bubbly-bg'
 
     import logic from './utils/logic'
 
@@ -81,6 +82,14 @@
             const today = new Date()
             const info = today.toString().split(' ')
             this.today = `${info[1]} ${today.getDate()}, ${today.getFullYear()}`
+
+            bubbly({
+                colorStart: "#fbffe1",
+                colorStop: "#ffe9e4",
+                blur: 1,
+                compose: 'source-over',
+                bubbleFunc: () => `hsla(${Math.random() * 50}, 100%, 50%, .3)`
+            })
 
             this.getQuote()
         },
