@@ -140,6 +140,7 @@
     * {
         margin: 0;
         padding: 0;
+        font-family: 'en-handwrite', 'cn-handwrite', serif;
     }
 
     body {
@@ -221,7 +222,6 @@
         letter-spacing: .1em;
         line-height: 1.3;
         max-width: 660px;
-        font-family: 'en-handwrite', 'cn-handwrite', serif;
         font-weight: bold;
     }
 
@@ -229,7 +229,6 @@
         letter-spacing: .1em;
         text-align: right;
         margin-top: 8px;
-        font-family: 'en-handwrite', 'cn-handwrite', serif;
         font-weight: bold;
     }
 </style>
