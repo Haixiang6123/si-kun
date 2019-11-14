@@ -176,5 +176,6 @@ export default function logic(rawData, internalReference, controlSampleName) {
     console.log(samples)
     // Output new csv
     const newContent = getOutput(samples, internalReference, controlSampleName)
-    createXLXS(newContent)
+    // Create xlxs file
+    createXLXS(newContent, internalReference, controlSampleName)
 }

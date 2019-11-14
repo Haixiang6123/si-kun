@@ -8,7 +8,7 @@ function s2ab(s) {
     return buf;
 }
 
-export function createXLXS(content) {
+export function createXLXS(content, internalReference, controlSample) {
     const wb = XLSX.utils.book_new();
 
     wb.Props = {
@@ -23,5 +23,5 @@ export function createXLXS(content) {
 
     const wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
-    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), `[${internalReference}]-[${controlSample}]-Result.xlsx`);
 }
