@@ -1,5 +1,5 @@
-# bio-guo
-使用 Node.js 对基因数据进行计算
+# si-kun
+给思坤写的小网站：使用 JavaScript 对基因数据进行计算
 
 ## 网站
 
